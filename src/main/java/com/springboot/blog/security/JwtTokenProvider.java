@@ -1,13 +1,12 @@
 package com.springboot.blog.security;
 
-import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.ExpiredJwtException;
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.MalformedJwtException;
+import com.springboot.blog.exception.BlogAPIException;
+import io.jsonwebtoken.*;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
 import io.jsonwebtoken.security.SignatureException;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
 
@@ -48,30 +47,31 @@ public class JwtTokenProvider {
     // get username from token
     public String getUsername(String token){
         Claims claims = Jwts.parserBuilder()
+                .setSigningKey(key())
                 .build()
                 .parseClaimsJws(token)
                 .getBody();
-
         String username = claims.getSubject();
-
         return username;
     }
+
 
     // validate Jwt Token
     public boolean validateToken(String token){
         try {
             Jwts.parserBuilder()
+                    .setSigningKey(key())
                     .build()
                     .parse(token);
             return true;
-        } catch (ExpiredJwtException e) {
-            throw new RuntimeException(e);
-        } catch (MalformedJwtException e) {
-            throw new RuntimeException(e);
-        } catch (SignatureException e) {
-            throw new RuntimeException(e);
-        } catch (IllegalArgumentException e) {
-            throw new RuntimeException(e);
+        } catch (MalformedJwtException ex) {
+            throw new BlogAPIException(HttpStatus.BAD_REQUEST, "Invalid JWT token");
+        } catch (ExpiredJwtException ex) {
+            throw new BlogAPIException(HttpStatus.BAD_REQUEST, "Expired JWT token");
+        } catch (UnsupportedJwtException ex) {
+            throw new BlogAPIException(HttpStatus.BAD_REQUEST, "Unsupported JWT token");
+        } catch (IllegalArgumentException ex) {
+            throw new BlogAPIException(HttpStatus.BAD_REQUEST, "JWT claims string is empty.");
         }
 
     }
