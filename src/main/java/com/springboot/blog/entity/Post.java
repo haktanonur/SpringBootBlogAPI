@@ -34,4 +34,8 @@ public class Post {
     @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true)
     // using set here instead of list because List allows the duplicates, and that does not allow duplicates.
     private Set<Comment> comments = new HashSet<>();
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "category_id")
+    private Category category;
 }
