@@ -49,6 +49,7 @@ public class SecurityConfig {
                         authorize.requestMatchers(HttpMethod.GET, "/api/v1/**").permitAll()
                                 .requestMatchers("/api/v1/auth/**").permitAll()
                                 .anyRequest().authenticated()
+
                 ).exceptionHandling(exception -> exception
                         .authenticationEntryPoint(authenticationEntryPoint))
                 .sessionManagement(session -> session
