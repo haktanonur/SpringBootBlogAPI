@@ -10,6 +10,7 @@ This project is a Blog REST API developed with Spring Boot. This project include
 - Exception handling mechanism with custom exceptions and exception handlers using @ControllerAdvice
 - Lombok for reducing boilerplate code
 - ModelMapper for mapping DTOs to entities and entities to DTOs 
+- Deploy on AWS
 
 ## Tools and Technologies used in this project:
 Technologies:
@@ -21,6 +22,7 @@ Technologies:
 - JWT
 - Lombok
 - ModelMapper
+- AWS
 
 Database:
 - MySQL database
