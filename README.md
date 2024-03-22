@@ -46,4 +46,9 @@ Tools:
 11. Click the Authorize button
 Now you can test the API endpoints
 
+## How to run the application using Docker:
+1- Uncomment the line "spring.profiles.active=docker" in the "application.properties" file.
+2- Run ``` mvn clean package -DskipTests ``` to build the applications and create the docker image locally.
+3- Run ``` docker-compose up -d --build ``` to start the applications.
+
 ![image](https://github.com/haktanonur/spring-boot-blog-api/assets/69698425/2474a8df-736a-4cea-955c-2a36ef6300d9)

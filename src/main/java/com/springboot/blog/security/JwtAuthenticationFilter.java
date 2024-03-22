@@ -26,16 +26,14 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                                     HttpServletResponse response,
                                     FilterChain filterChain) throws ServletException, IOException {
 
-        // get JWT token from http request
+        // Get JWT token from HTTP request
         String token = getTokenFromRequest(request);
 
-        // validate token
-        if (StringUtils.hasText(token) && jwtTokenProvider.validateToken(token) ){
-
-            // get username from the token
+        // Validate Token
+        if(StringUtils.hasText(token) && jwtTokenProvider.validateToken(token)){
+            // get username from token
             String username = jwtTokenProvider.getUsername(token);
 
-            // load the user associated with token
             UserDetails userDetails = userDetailService.loadUserByUsername(username);
 
             UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(
@@ -45,19 +43,20 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             );
 
             authenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+
             SecurityContextHolder.getContext().setAuthentication(authenticationToken);
         }
 
         filterChain.doFilter(request, response);
-
     }
 
     private String getTokenFromRequest(HttpServletRequest request){
         String bearerToken = request.getHeader("Authorization");
 
-        if (StringUtils.hasText(bearerToken) && bearerToken.startsWith("Bearer ")){
+        if(StringUtils.hasText(bearerToken) && bearerToken.startsWith("Bearer ")){
             return bearerToken.substring(7, bearerToken.length());
         }
+
         return null;
     }
 
