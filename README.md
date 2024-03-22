@@ -33,17 +33,29 @@ Tools:
 - Maven - Build Tool
 
 ## How to run
-1. Clone this repository
-2. Create a MySQL database
-3. Change the database configuration in application.properties
-4. Run the application with mvn spring-boot:run
-5. Open http://localhost:8080/swagger-ui/index.html in your browser
-6. Sign Up/Register a new user
-7. Sign In/Login with the registered user
-8. Copy the JWT token from the response
-9. Click the Authorize button in the Swagger UI
-10. Paste the JWT token in the Value field without the Bearer prefix
-11. Click the Authorize button
+1- Clone this repository
+
+```bash
+https://github.com/haktanonur/spring-boot-blog-api.git
+```
+
+2- Create a MySQL database and change the database configuration in application.properties
+
+```bash
+CREATE DATABASE myblog;
+```
+3- Run the application 
+```bash
+mvn spring-boot:run
+```
+
+4. Open http://localhost:8080/swagger-ui/index.html in your browser
+5. Sign Up/Register a new user
+6. Sign In/Login with the registered user
+7. Copy the JWT token from the response
+8. Click the Authorize button in the Swagger UI
+9. Paste the JWT token in the Value field without the Bearer prefix
+10. Click the Authorize button
 Now you can test the API endpoints
 
 ## How to run the application using Docker:
